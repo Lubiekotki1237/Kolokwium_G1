@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Kolokwium — plik do samodzielnego uzupełnienia.
 # Uruchomienie: bash src/analiza.sh dane
 # Wynik: nazwa.log;liczba_ERROR;STATUS
@@ -11,7 +12,20 @@
 # TODO 6: printf trzy pola oddzielone średnikami.
 
 KATALOG="${1:-dane}"
-if [ [ -d "$KATALOG" ] ]; then
+if [ [-d "$KATALOG" ] ]; then
 echo "Błąd katalog '$KATALOG' nie istnieje" >&2
 exit 2
 fi 
+ 
+for PLIK in "$KATALOG"/*.log; do
+[ [-f "$PLIK" ] ] || continue
+nazwa=$(basename "$PLIK")
+liczba_ERROR=$(grep -c '^ERROR' "$PLIK")
+iczba_WARN=$(grep -c '^WARN' "$PLIK")
+if [ [ "$liczba_WARN" -ge 2 ] ]; then
+STATUS="ALARM"
+else
+STATUS="OK"
+fi
+echo "${nazwa};${liczba_ERROR};${STATUS}"
+done
