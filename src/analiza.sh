@@ -11,18 +11,23 @@
 # TODO 5: if wyznaczający STATUS zgodnie z ZADANIA.md.
 # TODO 6: printf trzy pola oddzielone średnikami.
 
-KATALOG="${1:-dane}"
-if [ [-d "$KATALOG" ] ]; then
+
+if [ -n "$1" ]; then
+KATALOG="$1"
+else
+KATALOG="dane"
+fi
+if [ ! -d "$KATALOG" ]; then
 echo "Błąd katalog '$KATALOG' nie istnieje" >&2
-exit 2
-fi 
+exit 2 
+fi
  
 for PLIK in "$KATALOG"/*.log; do
-[ [-f "$PLIK" ] ] || continue
+[ -f "$PLIK" ] || continue
 nazwa=$(basename "$PLIK")
 liczba_ERROR=$(grep -c '^ERROR' "$PLIK")
 iczba_WARN=$(grep -c '^WARN' "$PLIK")
-if [ [ "$liczba_WARN" -ge 2 ] ]; then
+if [[ "$liczba_WARN" -ge 2 ]]; then
 STATUS="ALARM"
 else
 STATUS="OK"
