@@ -1,0 +1,1 @@
+-rwxr-x--- 1 6solecka stud2026 481 Nov 19 10:43 src/analiza.sh
