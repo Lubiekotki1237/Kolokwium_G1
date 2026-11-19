@@ -26,7 +26,8 @@ for PLIK in "$KATALOG"/*.log; do
 [ -f "$PLIK" ] || continue
 nazwa=$(basename "$PLIK")
 liczba_ERROR=$(grep -c '^ERROR' "$PLIK")
-iczba_WARN=$(grep -c '^WARN' "$PLIK")
+liczba_WARN=$(grep -c '^WARN' "$PLIK")
+
 if [[ "$liczba_WARN" -ge 2 ]]; then
 STATUS="ALARM"
 else
